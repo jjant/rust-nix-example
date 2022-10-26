@@ -1,10 +1,8 @@
-let naerskLib = pkgs.callPackage naersk { };
-in {
-  app = naerskLib.buildPackage {
+{ naersk, pkg-config, targetPlatform }: {
+  app = naersk.lib."${targetPlatform.system}".buildPackage rec {
     name = "hello-random";
     src = ./.;
     cargoBuildOptions = x: x;
-    nativeBuildInputs = [ pkgs.pkg-config ];
-    PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+    nativeBuildInputs = [ pkg-config ];
   };
 }

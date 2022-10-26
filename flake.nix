@@ -10,13 +10,11 @@
 
   outputs = inputs:
     with inputs;
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-        code =
-          pkgs.callPackage ./. { inherit nixpkgs system rust-overlay naersk; };
-      in rec {
-        packages = { app = code.app; };
-        default = packages.all;
-      });
+
+    let
+      pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+      pkg-config = pkgs.pkg-config;
+
+      code = pkgs.callPackage ./. { inherit pkg-config naersk; };
+    in { packages.aarch64-darwin.default = code.app; };
 }
