@@ -15,6 +15,10 @@
       pkgs = nixpkgs.legacyPackages.aarch64-darwin;
       pkg-config = pkgs.pkg-config;
 
-      code = pkgs.callPackage ./. { inherit pkg-config naersk; };
+      # pkgs.callPackage automatically passes arguments to ./. (i.e, `default.nix`)
+      code = pkgs.callPackage ./. {
+        # inherit is shorthand for `{ pkg-config = pkg-config, naersk = naersk }`
+        inherit pkg-config naersk;
+      };
     in { packages.aarch64-darwin.default = code.app; };
 }
