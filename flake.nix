@@ -16,6 +16,8 @@
       pkg-config = pkgs.pkg-config;
 
       # pkgs.callPackage automatically passes arguments to ./. (i.e, `default.nix`)
+      # See nix-pills 13: https://nixos.org/guides/nix-pills/callpackage-design-pattern.html
+      # (though the callPackage function used here seems a bit more magical)
       code = pkgs.callPackage ./. {
         # inherit is shorthand for `{ pkg-config = pkg-config, naersk = naersk }`
         inherit pkg-config naersk;
